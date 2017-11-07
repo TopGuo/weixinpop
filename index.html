@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>周翼单车app下载</title>
+    <script src="js/bootstrap/js/Jquery.js"></script>
+</head>
+
+<body>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .test {
+            height: 600px;
+            max-width: 600px;
+            font-size: 40px;
+        }
+    </style>
+    <div align="center">
+        <img src="img/bg.png" style="margin: 0 auto ">
+
+        <a id="imgId"><img src="img/btn.png"></a>
+
+
+    </div>
+
+
+    <script language="javascript">
+        $(function () {
+
+            $("#imgId").click(function () {
+                download();
+            });
+        });
+
+        function download() {
+            var cssText =
+                "#weixin-tip{position: fixed; left:0; top:0; background: rgba(0,0,0,0.8); filter:alpha(opacity=80); width: 100%; height:100%; z-index: 100;} #weixin-tip p{text-align: center; margin-top: 10%; padding:0 5%;}";
+            var u = navigator.userAgent;
+            if (u.indexOf('Android') > -1 || u.indexOf('Linux') > -1) { //安卓手机
+                //判断使用环境
+                if (is_weixin()) {
+                    loadHtml();
+                    loadStyleText(cssText);
+                } else {
+                    window.location.href = "http://android.zhouyibike.com/app-release.apk";
+                }
+            } else if (u.indexOf('iPhone') > -1) { //苹果手机
+                window.location.href = "https://itunes.apple.com/cn/app/id1239249767?mt=8";
+            } else if (u.indexOf('Windows Phone') > -1) {
+                //winphone手机
+                alert("机型不匹配！");
+            }
+        }
+
+        function is_weixin() {
+            var ua = navigator.userAgent.toLowerCase();
+            if (ua.match(/MicroMessenger/i) == "micromessenger") {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        function loadHtml() {
+            var div = document.createElement('div');
+            div.id = 'weixin-tip';
+            div.innerHTML = '<p><img src="live_weixin.png" alt="请在微浏览器打开"/></p>';
+            document.body.appendChild(div);
+        }
+
+        function loadStyleText(cssText) {
+            var style = document.createElement('style');
+            style.rel = 'stylesheet';
+            style.type = 'text/css';
+            try {
+                style.appendChild(document.createTextNode(cssText));
+            } catch (e) {
+                style.styleSheet.cssText = cssText; //ie9以下
+            }
+            var head = document.getElementsByTagName("head")[0]; //head标签之间加上style样式
+            head.appendChild(style);
+        }
+    </script>
+
+</body>
+
+</html>
